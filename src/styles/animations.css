@@ -1,0 +1,22 @@
+@keyframes loadingColor {
+    0% {
+      background: #B9D1EB;
+    }
+    50% {
+      background: #E5BDF6;
+    }
+    100% {
+      background: #CFC7F8;
+    }
+}
+
+@keyframes loading {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
