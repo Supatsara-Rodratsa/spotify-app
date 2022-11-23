@@ -19,6 +19,12 @@ onErrorCaptured((err) => {
   error.value = err;
   return true;
 });
+
+function goNext(name) {
+  router.push({
+    name: name,
+  });
+}
 </script>
 <template>
   <section class="search-container">
@@ -30,7 +36,7 @@ onErrorCaptured((err) => {
     <div class="flex-col">
       <div class="flex-row space-between">
         <h1 class="flex topic">New Album Releases</h1>
-        <div class="underline">
+        <div class="underline" @click="goNext('newRelease')">
           <p>See All</p>
         </div>
       </div>

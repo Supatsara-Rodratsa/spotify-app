@@ -71,3 +71,19 @@ export async function getArtistInfo(id) {
   const data = await result.json();
   return data;
 }
+
+export async function getAlbumTracks(id) {
+  const result = await fetch(`${CONSTANTS.BASE_URL}/albums/${id}/tracks`, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+
+  if (!result.ok) {
+    throw new Error('Failed to load album tracks!!');
+  }
+
+  const data = await result.json();
+  return data;
+}

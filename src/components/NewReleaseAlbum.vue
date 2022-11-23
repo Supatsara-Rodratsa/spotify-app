@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { getToken, getNewRelease, getArtistInfo } from '../services/spotifyAPI';
 import { CONSTANTS } from '../constants/constants';
 import AlbumCard from './AlbumCard.vue';
+import { useNewReleaseStore } from '@/stores/newRelease';
+import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['selectedAlbum']);
 
@@ -11,15 +13,21 @@ const selectedAlbum = ref(null);
 const newReleaseData = ref([]);
 const artistsInfo = ref([]);
 
+const newReleaseStore = useNewReleaseStore();
+const { transformAlbum } = newReleaseStore;
+const { getAllAlbumRelease } = storeToRefs(newReleaseStore);
+console.log(getAllAlbumRelease, 'allAlbumRelease');
 try {
   await getToken(CONSTANTS.SPOTIFY_CLIENT_ID, CONSTANTS.SPOTIFY_CLIENT_SECRET);
   const response = await getNewRelease();
-  transformData(response);
+  console.log(response, 'res');
+  transformAlbum(response);
+  // newReleaseData.value = getAllAlbumRelease;
+  console.log(getAllAlbumRelease, 'allAlbumRelease');
 } catch (err) {
   error.value = err;
   throw err;
 }
-
 async function transformData(albums) {
   if (albums.albums) {
     // let index = 0;

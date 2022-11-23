@@ -1,0 +1,49 @@
+<script setup>
+import { computed } from 'vue';
+const props = defineProps({ path: String });
+
+const transformEmbed = computed(() => {
+  const position = props.path.lastIndexOf('album');
+  return (
+    props.path.substring(0, position) +
+    'embed/' +
+    props.path.substring(position)
+  );
+});
+</script>
+
+<template>
+  <div id="track">
+    <div class="container">
+      <iframe
+        class="frame"
+        :src="transformEmbed"
+        allow="encrypted-media;autoplay; fullscreen"
+      ></iframe>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+#track {
+  position: fixed;
+  bottom: 0;
+  width: -webkit-fill-available;
+  margin-left: -30px;
+}
+.container {
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.frame {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  position: absolute;
+  border: 0;
+}
+</style>

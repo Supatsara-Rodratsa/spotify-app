@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
 import AlbumDetailsPage from '../views/AlbumDetailsPage.vue';
 import NotFoundPage from '../views/NotFoundPage.vue';
+import NewReleasePage from '../views/NewReleasePage.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     name: 'album',
     component: AlbumDetailsPage,
     props: true,
+  },
+  {
+    path: '/new-release',
+    name: 'newRelease',
+    component: NewReleasePage,
   },
   {
     path: '/:pathMatch(.*)',
