@@ -2,14 +2,14 @@
 import { ref } from 'vue';
 import NavigateButton from '../components/NavigateButton.vue';
 import AlbumCard from '../components/AlbumCard.vue';
-import { useNewReleaseStore } from '@/stores/newRelease';
+import { useFeaturedPlaylistStore } from '@/stores/featuredPlaylist';
 import { storeToRefs } from 'pinia';
 import router from '../router/index';
 import ErrorMessage from '../components/ErrorMessage.vue';
 
 const error = ref('');
-const newReleaseStore = useNewReleaseStore();
-const { getAllAlbumRelease } = storeToRefs(newReleaseStore);
+const featuredPlaylist = useFeaturedPlaylistStore();
+const { getAllFeaturedPlaylist } = storeToRefs(featuredPlaylist);
 
 await new Promise((resolve) => {
   setTimeout(() => {
@@ -17,19 +17,19 @@ await new Promise((resolve) => {
   }, 1000);
 });
 
-if (getAllAlbumRelease.value.length == 0) {
-  const { fetchNewAlbumRelease } = newReleaseStore;
+if (getAllFeaturedPlaylist.value.length == 0) {
+  const { fetchFeaturedPlaylist } = featuredPlaylist;
   try {
-    await fetchNewAlbumRelease();
+    await fetchFeaturedPlaylist();
   } catch (err) {
     error.value = err;
   }
 }
 
-async function onClickedAlbum(album) {
+async function onClickedPlaylist(playlist) {
   router.push({
-    name: 'album',
-    params: { id: album.id },
+    name: 'playlist',
+    params: { id: playlist.id },
   });
 }
 </script>
@@ -38,17 +38,20 @@ async function onClickedAlbum(album) {
   <div class="flex-col" v-if="!error">
     <div class="navigation-container">
       <NavigateButton />
-      <h1>New Album Releases</h1>
+      <h1>Featured Playlists</h1>
     </div>
     <div class="flex-col">
       <template class="grid">
-        <div v-for="(item, index) in getAllAlbumRelease" v-bind:key="index">
+        <div v-for="(item, index) in getAllFeaturedPlaylist" v-bind:key="index">
           <AlbumCard
             :newAlbum="item"
             :expanded="true"
-            @click="onClickedAlbum(item)"
+            :isFeaturedPlaylist="true"
+            @click="onClickedPlaylist(item)"
             :style="
-              index == getAllAlbumRelease.length - 1 ? 'margin-right:30px' : ''
+              index == getAllFeaturedPlaylist.length - 1
+                ? 'margin-right:30px'
+                : ''
             "
           ></AlbumCard>
         </div>

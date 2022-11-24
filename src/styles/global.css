@@ -58,7 +58,7 @@ body {
 .underline {
     display: flex;
     margin: 30px 0;
-    color: purple;
+    color: midnightblue;
 }
 
 .underline:hover {

@@ -1,20 +1,24 @@
 import { defineStore } from 'pinia';
+import { checkingToken, getNewRelease } from '../services/spotifyAPI';
 
 export const useNewReleaseStore = defineStore('newRelease', {
   state: () => ({
-    allAlbumRelease: 'Hi',
+    allAlbumRelease: [],
   }),
   getters: {
     getAllAlbumRelease(state) {
-      console.log(state);
       return state.allAlbumRelease;
     },
   },
   actions: {
+    async fetchNewAlbumRelease() {
+      await checkingToken();
+      const response = await getNewRelease();
+      this.allAlbumRelease = this.transformAlbum(response);
+    },
     transformAlbum(albums) {
       let temp = [];
       for (let item of albums.albums.items) {
-        // console.log(item)
         temp.push({
           id: item.id,
           album_type: item.album_type,
@@ -25,10 +29,8 @@ export const useNewReleaseStore = defineStore('newRelease', {
           release_date: item.release_date,
           total_tracks: item.total_tracks,
         });
-        // this.allAlbumRelease.push(temp);
       }
-      console.log(temp, 'temp');
-    //   this.allAlbumRelease = albums.albums.items[0].name
+      return temp;
     },
   },
 });

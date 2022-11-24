@@ -1,13 +1,19 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { getAlbumDetails, getAlbumTracks } from '../services/spotifyAPI';
+import {
+  getAlbumDetails,
+  getAlbumTracks,
+  getArtistInfo,
+} from '../services/spotifyAPI';
 import AudioFrame from '../components/AudioFrame.vue';
 import TableList from '../components/TableList.vue';
 import NavigateButton from '../components/NavigateButton.vue';
+import ArtistInfo from '../components/ArtistInfo.vue';
 
 const props = defineProps({ id: String });
 const albumDetail = ref('');
 const tracks = ref('');
+const artists = ref([]);
 
 await new Promise((resolve) => {
   setTimeout(() => {
@@ -20,22 +26,28 @@ onMounted(async () => {
 });
 
 async function getNewAlbumDetails(id) {
-  try {
-    albumDetail.value = await getAlbumDetails(id);
-    tracks.value = await getAlbumTracks(id);
-  } catch (error) {
-    console.log(error);
-    throw error;
+  albumDetail.value = await getAlbumDetails(id);
+  await getArtistDetails(albumDetail.value);
+  tracks.value = await getAlbumTracks(id);
+}
+
+async function getArtistDetails(album) {
+  for (let artist of album.artists) {
+    const response = await getArtistInfo(artist.id);
+    artists.value.push({
+      name: response.name,
+      image: response.images[0].url,
+    });
   }
 }
 
 const date = computed(() => {
   const tempDate = new Date(albumDetail.value.release_date);
   return (
-    tempDate?.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
+    tempDate?.toLocaleDateString('en-ZA', {
       day: 'numeric',
+      month: 'short',
+      year: 'numeric',
     }) || null
   );
 });
@@ -84,15 +96,33 @@ const totalSong = computed(() => {
         </div>
       </div>
     </div>
-    <TableList :tracks="tracks" />
-    <AudioFrame :path="albumDetail.external_urls.spotify" />
+    <div class="flex-row">
+      <TableList v-if="tracks" :tracks="tracks" />
+      <div class="flex-col artist-container">
+        <h3>Artist</h3>
+        <div class="flex-col gap-10">
+          <template v-for="artistInfo in artists" :key="artistInfo">
+            <ArtistInfo
+              :img="artistInfo.image"
+              :name="artistInfo.name"
+            ></ArtistInfo>
+          </template>
+        </div>
+      </div>
+    </div>
+    <AudioFrame :isAlbum="true" :path="albumDetail.external_urls.spotify" />
   </div>
 </template>
 
 <style scoped>
+.artist-container {
+  margin-left: 40px;
+}
+
 .album-wrapper {
   height: 100%;
 }
+
 .wrapper {
   position: relative;
   margin-bottom: 150px;
@@ -143,5 +173,9 @@ h1 {
 
 .mrg-30 {
   margin: 30px;
+}
+
+.gap-10 {
+  gap: 10px;
 }
 </style>

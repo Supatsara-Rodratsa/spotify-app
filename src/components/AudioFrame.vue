@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from 'vue';
-const props = defineProps({ path: String });
+const props = defineProps({ path: String, isAlbum: Boolean });
 
 const transformEmbed = computed(() => {
-  const position = props.path.lastIndexOf('album');
+  const position = props.path.lastIndexOf(props.isAlbum ? 'album' : 'playlist');
   return (
     props.path.substring(0, position) +
     'embed/' +
@@ -45,5 +45,13 @@ const transformEmbed = computed(() => {
   height: 80px;
   position: absolute;
   border: 0;
+}
+
+::ng-deep .as {
+  background: red !important;
+}
+
+.am {
+  background: beige !important;
 }
 </style>
