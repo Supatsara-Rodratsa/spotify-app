@@ -1,9 +1,19 @@
 <script setup>
 import { computed } from 'vue';
 
-const props = defineProps({ newAlbum: Object });
+const props = defineProps({
+  newAlbum: Object,
+  expanded: Boolean,
+  isFeaturedPlaylist: Boolean,
+  isHideName: Boolean,
+  isHideSong: Boolean,
+});
 
 const totalSong = computed(() => {
+  if (!props.newAlbum.total_tracks) {
+    return;
+  }
+
   if (props.newAlbum.total_tracks == 1) {
     return '1 Song';
   } else {
@@ -14,12 +24,20 @@ const totalSong = computed(() => {
 <template>
   <div
     class="card-container"
+    :class="expanded ? 'expand' : ''"
     :style="`background-image: url(${newAlbum.image})`"
   >
     <div class="content-bg flex-col from-bottom">
       <div class="pad-20 gap-5 flex-col algin-start">
-        <div class="header title">{{ newAlbum.name }}</div>
-        <div class="description">{{ totalSong }}</div>
+        <div
+          class="header title"
+          :class="{ hide: isFeaturedPlaylist && isHideName }"
+        >
+          {{ newAlbum.name }}
+        </div>
+        <div class="description" :class="{ hide: isHideSong }">
+          {{ totalSong || '' }}
+        </div>
       </div>
     </div>
   </div>
@@ -33,6 +51,11 @@ const totalSong = computed(() => {
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   cursor: pointer;
+}
+
+.expand {
+  width: 250px !important;
+  height: 250px !important;
 }
 
 .content-bg:hover {
@@ -65,9 +88,17 @@ const totalSong = computed(() => {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: start;
-  display: -webkit-box !important;
+  display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal;
+}
+
+.card-container .hide {
+  display: none;
+}
+
+.card-container:hover .hide :not(.description) {
+  display: block !important;
 }
 </style>

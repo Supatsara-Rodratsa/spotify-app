@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onErrorCaptured } from 'vue';
 import LoadingItem from './components/LoadingItem.vue';
+import ErrorMessage from './components/ErrorMessage.vue';
+
 const error = ref('');
 
 onErrorCaptured((err) => {
@@ -15,15 +17,19 @@ onErrorCaptured((err) => {
     <header class="flex-col">
       <div class="flex-row icon router-container">
         <img src="./assets/icons/homePage.png" alt="home" />
-        <router-link to="/">Home</router-link>
+        <router-link :to="{ name: 'main' }">Home</router-link>
       </div>
       <div class="flex-row icon router-container">
-        <img src="./assets/icons/album.png" alt="home" />
-        <router-link to="/">Playlists</router-link>
+        <img src="./assets/icons/album.png" alt="album" />
+        <router-link to="/new-release">Albums</router-link>
+      </div>
+      <div class="flex-row icon router-container">
+        <img src="./assets/icons/playlist.png" alt="playlist" />
+        <router-link to="/featured-playlists">Playlists</router-link>
       </div>
     </header>
     <main>
-      <div class="content">
+      <div class="content" v-if="!error">
         <router-view v-slot="{ Component }">
           <suspense timeout="0">
             <component :is="Component" />
@@ -33,6 +39,7 @@ onErrorCaptured((err) => {
           </suspense>
         </router-view>
       </div>
+      <ErrorMessage :error="error" v-else />
     </main>
   </div>
 </template>
@@ -58,7 +65,9 @@ header {
   overflow-x: hidden;
 }
 
-.content,
+.content {
+  height: 90%;
+}
 .app-container {
   height: 100%;
 }
