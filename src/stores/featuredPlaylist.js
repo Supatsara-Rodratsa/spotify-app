@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia';
-import { getFeaturedPlaylist, checkingToken } from '../services/spotifyAPI';
+import {
+  getFeaturedPlaylist,
+  checkingToken,
+  transformFeaturedPlaylistFromApi,
+} from '../services/spotifyAPI';
 
 export const useFeaturedPlaylistStore = defineStore('featuredPlaylist', {
   state: () => ({
@@ -12,22 +16,11 @@ export const useFeaturedPlaylistStore = defineStore('featuredPlaylist', {
   },
   actions: {
     async fetchFeaturedPlaylist() {
-      await checkingToken();
-      const response = await getFeaturedPlaylist();
-      this.transformFeaturedPlaylist(response);
-    },
-    transformFeaturedPlaylist(playlists) {
-      let temp = [];
-      for (let playlist of playlists.playlists.items) {
-        temp.push({
-          id: playlist.id,
-          description: playlist.description,
-          url: playlist.external_urls.spotify,
-          image: playlist.images[0].url,
-          name: playlist.name,
-        });
+      if (this.allFeaturedPlaylist.length == 0) {
+        await checkingToken();
+        const response = await getFeaturedPlaylist();
+        this.allFeaturedPlaylist = transformFeaturedPlaylistFromApi(response);
       }
-      this.allFeaturedPlaylist = [...temp];
     },
   },
 });

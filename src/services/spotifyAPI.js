@@ -146,3 +146,53 @@ export async function getPlayListTrack(id) {
   const data = await result.json();
   return data;
 }
+
+export async function getSearchForItem(search) {
+  const result = await fetch(
+    `${CONSTANTS.BASE_URL}/search?type=album,playlist&q=${search}&market=US`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }
+  );
+
+  if (!result.ok) {
+    throw new Error('Failed to search album and playlist details!!');
+  }
+
+  const data = await result.json();
+  return data;
+}
+
+export function transformAlbumFromApi(albums) {
+  let temp = [];
+  for (let item of albums.albums.items) {
+    temp.push({
+      id: item.id,
+      album_type: item.album_type,
+      artists: item.artists,
+      url: item.external_urls.spotify,
+      image: item.images[0].url,
+      name: item.name,
+      release_date: item.release_date,
+      total_tracks: item.total_tracks,
+    });
+  }
+  return temp;
+}
+
+export function transformFeaturedPlaylistFromApi(playlists) {
+  let temp = [];
+  for (let playlist of playlists.playlists.items) {
+    temp.push({
+      id: playlist.id,
+      description: playlist.description,
+      url: playlist.external_urls.spotify,
+      image: playlist.images[0].url,
+      name: playlist.name,
+    });
+  }
+  return temp;
+}

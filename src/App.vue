@@ -2,6 +2,7 @@
 import { ref, onErrorCaptured } from 'vue';
 import LoadingItem from './components/LoadingItem.vue';
 import ErrorMessage from './components/ErrorMessage.vue';
+
 const error = ref('');
 
 onErrorCaptured((err) => {
@@ -16,7 +17,7 @@ onErrorCaptured((err) => {
     <header class="flex-col">
       <div class="flex-row icon router-container">
         <img src="./assets/icons/homePage.png" alt="home" />
-        <router-link to="/">Home</router-link>
+        <router-link :to="{ name: 'main' }">Home</router-link>
       </div>
       <div class="flex-row icon router-container">
         <img src="./assets/icons/album.png" alt="album" />

@@ -26,7 +26,7 @@ if (getAllFeaturedPlaylist.value.length == 0) {
   }
 }
 
-async function onClickedPlaylist(playlist) {
+function onClickedPlaylist(playlist) {
   router.push({
     name: 'playlist',
     params: { id: playlist.id },
@@ -44,9 +44,12 @@ async function onClickedPlaylist(playlist) {
       <template class="grid">
         <div v-for="(item, index) in getAllFeaturedPlaylist" v-bind:key="index">
           <AlbumCard
+            data-aos="zoom-in-up"
+            data-aos-duration="1500"
             :newAlbum="item"
             :expanded="true"
             :isFeaturedPlaylist="true"
+            :isHideName="true"
             @click="onClickedPlaylist(item)"
             :style="
               index == getAllFeaturedPlaylist.length - 1

@@ -90,7 +90,12 @@ function goToAlbum(id) {
 </script>
 
 <template>
-  <div class="flex-col space-between table width-tracks" v-if="tracksRef">
+  <div
+    class="flex-col space-between table width-tracks"
+    v-if="tracksRef"
+    data-aos="fade-zoom-in"
+    data-aos-duration="1500"
+  >
     <div class="table-row table-header">
       <div class="table-row-item flex-grow-1">#</div>
       <div class="table-row-item flex-grow">
@@ -121,7 +126,12 @@ function goToAlbum(id) {
       </div>
     </template>
   </div>
-  <div class="flex-col space-between table" v-if="playlistsRef">
+  <div
+    class="flex-col space-between table"
+    v-if="playlistsRef"
+    data-aos="fade-zoom-in"
+    data-aos-duration="1500"
+  >
     <div class="table-row table-header">
       <div class="table-row-item width-id">#</div>
       <div class="table-row-item width-song">

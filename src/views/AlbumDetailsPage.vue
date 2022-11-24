@@ -63,7 +63,7 @@ const totalSong = computed(() => {
 
 <template>
   <div class="flex-col album-wrapper" v-if="albumDetail">
-    <div class="wrapper">
+    <div class="wrapper" data-aos="fade-zoom-in" data-aos-duration="1500">
       <div class="flex-col album-header-container">
         <div class="mrg-30">
           <NavigateButton />

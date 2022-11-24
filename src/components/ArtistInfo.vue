@@ -2,7 +2,11 @@
 defineProps({ img: String, name: String });
 </script>
 <template>
-  <div class="flex-col center gap">
+  <div
+    class="flex-col center gap"
+    data-aos="fade-zoom-in"
+    data-aos-duration="1500"
+  >
     <div class="flex-row gap center">
       <img :src="img" alt="Avatar" />
       <div class="contents">{{ name || '' }}</div>

@@ -13,6 +13,14 @@ const newReleaseStore = useNewReleaseStore();
 const { fetchNewAlbumRelease } = newReleaseStore;
 const { getAllAlbumRelease } = storeToRefs(newReleaseStore);
 
+if (getAllAlbumRelease.value.length == 0) {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
+}
+
 try {
   await fetchNewAlbumRelease();
   newReleaseData.value = getAllAlbumRelease.value;
@@ -30,6 +38,8 @@ function getAlbum(item) {
     <template class="flex-row gap">
       <div v-for="(item, index) in newReleaseData" v-bind:key="index">
         <AlbumCard
+          data-aos="fade-up"
+          data-aos-duration="2000"
           :newAlbum="item"
           @click="getAlbum(item)"
           :style="index == newReleaseData.length - 1 ? 'margin-right:30px' : ''"

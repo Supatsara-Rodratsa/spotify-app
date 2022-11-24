@@ -5,6 +5,8 @@ const props = defineProps({
   newAlbum: Object,
   expanded: Boolean,
   isFeaturedPlaylist: Boolean,
+  isHideName: Boolean,
+  isHideSong: Boolean,
 });
 
 const totalSong = computed(() => {
@@ -27,10 +29,15 @@ const totalSong = computed(() => {
   >
     <div class="content-bg flex-col from-bottom">
       <div class="pad-20 gap-5 flex-col algin-start">
-        <div class="header title" :class="{ hide: isFeaturedPlaylist }">
+        <div
+          class="header title"
+          :class="{ hide: isFeaturedPlaylist && isHideName }"
+        >
           {{ newAlbum.name }}
         </div>
-        <div class="description">{{ totalSong || '' }}</div>
+        <div class="description" :class="{ hide: isHideSong }">
+          {{ totalSong || '' }}
+        </div>
       </div>
     </div>
   </div>
@@ -91,7 +98,7 @@ const totalSong = computed(() => {
   display: none;
 }
 
-.card-container:hover .hide {
+.card-container:hover .hide :not(.description) {
   display: block !important;
 }
 </style>

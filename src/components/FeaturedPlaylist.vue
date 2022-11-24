@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted } from 'vue';
 import { useFeaturedPlaylistStore } from '@/stores/featuredPlaylist';
 import { storeToRefs } from 'pinia';
 import AlbumCard from './AlbumCard.vue';
@@ -8,14 +8,15 @@ const emit = defineEmits(['selectedPlaylist']);
 const featuredPlaylistStore = useFeaturedPlaylistStore();
 const { fetchFeaturedPlaylist } = featuredPlaylistStore;
 const { getAllFeaturedPlaylist } = storeToRefs(featuredPlaylistStore);
-const error = ref(null);
 
-try {
-  await fetchFeaturedPlaylist();
-  console.log(getAllFeaturedPlaylist, 'getAllFeaturedPlaylist');
-} catch (err) {
-  error.value = err;
-  throw err;
+onMounted(async () => await fetchFeaturedPlaylist());
+
+if (getAllFeaturedPlaylist.value.length == 0) {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
 }
 
 function getPlaylist(playlist) {
@@ -27,9 +28,12 @@ function getPlaylist(playlist) {
     <template class="flex-row gap">
       <div v-for="(item, index) in getAllFeaturedPlaylist" v-bind:key="index">
         <AlbumCard
+          data-aos="fade-up"
+          data-aos-duration="2000"
           :newAlbum="item"
           @click="getPlaylist(item)"
           :isFeaturedPlaylist="true"
+          :isHideName="true"
           :style="
             index == getAllFeaturedPlaylist.length - 1
               ? 'margin-right:30px'

@@ -31,7 +31,7 @@ async function fetchPlayListDetails(id) {
 </script>
 <template>
   <div class="flex-col playlist-wrapper" v-if="playlistDetail">
-    <div class="wrapper">
+    <div class="wrapper" data-aos="fade-zoom-in" data-aos-duration="1500">
       <div class="flex-col playlist-header-container">
         <div class="mrg-30">
           <NavigateButton />

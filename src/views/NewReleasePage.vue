@@ -1,13 +1,10 @@
 <script setup>
-import { ref } from 'vue';
 import NavigateButton from '../components/NavigateButton.vue';
 import AlbumCard from '../components/AlbumCard.vue';
 import { useNewReleaseStore } from '@/stores/newRelease';
 import { storeToRefs } from 'pinia';
 import router from '../router/index';
-import ErrorMessage from '../components/ErrorMessage.vue';
 
-const error = ref('');
 const newReleaseStore = useNewReleaseStore();
 const { getAllAlbumRelease } = storeToRefs(newReleaseStore);
 
@@ -19,14 +16,10 @@ await new Promise((resolve) => {
 
 if (getAllAlbumRelease.value.length == 0) {
   const { fetchNewAlbumRelease } = newReleaseStore;
-  try {
-    await fetchNewAlbumRelease();
-  } catch (err) {
-    error.value = err;
-  }
+  await fetchNewAlbumRelease();
 }
 
-async function onClickedAlbum(album) {
+function onClickedAlbum(album) {
   router.push({
     name: 'album',
     params: { id: album.id },
@@ -35,7 +28,7 @@ async function onClickedAlbum(album) {
 </script>
 
 <template>
-  <div class="flex-col" v-if="!error">
+  <div class="flex-col">
     <div class="navigation-container">
       <NavigateButton />
       <h1>New Album Releases</h1>
@@ -44,6 +37,8 @@ async function onClickedAlbum(album) {
       <template class="grid">
         <div v-for="(item, index) in getAllAlbumRelease" v-bind:key="index">
           <AlbumCard
+            data-aos="zoom-in-up"
+            data-aos-duration="1500"
             :newAlbum="item"
             :expanded="true"
             @click="onClickedAlbum(item)"
@@ -55,7 +50,6 @@ async function onClickedAlbum(album) {
       </template>
     </div>
   </div>
-  <ErrorMessage :error="error" v-else />
 </template>
 <style scoped>
 .flex-row {
