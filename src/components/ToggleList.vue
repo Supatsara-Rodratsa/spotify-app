@@ -15,18 +15,13 @@ onMounted(() => {
 });
 
 function onSelectedItem(index) {
-  currentStatus.value[index] = !currentStatus.value[index];
+  currentStatus.value[index] = true;
   currentStatus.value.forEach((status, id) => {
-    if (id != index && currentStatus.value[index]) {
+    if (status && id != index) {
       currentStatus.value[id] = false;
     }
-
-    if (!currentStatus.value[index]) {
-      currentStatus.value[0] = true;
-    }
   });
-  const selectedIndex = currentStatus.value.findIndex((val) => val);
-  emit('selectedToggle', props.lists[selectedIndex]);
+  emit('selectedToggle', props.lists[index]);
 }
 </script>
 <template>
