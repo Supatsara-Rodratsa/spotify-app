@@ -7,13 +7,13 @@ const transformEmbed = computed(() => {
   return (
     props.path.substring(0, position) +
     'embed/' +
-    props.path.substring(position) + '?utm_source=generator'
+    props.path.substring(position) +
+    '?utm_source=generator'
   );
 });
 </script>
 
 <template>
-  
   <div id="track">
     <div class="container">
       <iframe
