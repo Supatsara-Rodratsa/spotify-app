@@ -7,7 +7,6 @@ const error = ref('');
 
 onErrorCaptured((err) => {
   error.value = err;
-  console.log(err, 'err');
   return true;
 });
 </script>
