@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ img: String, name: String });
+defineProps({ img: String, name: String, follower: Number });
 </script>
 <template>
   <div
@@ -9,7 +9,10 @@ defineProps({ img: String, name: String });
   >
     <div class="flex-row gap center">
       <img :src="img" alt="Avatar" />
-      <div class="contents">{{ name || '' }}</div>
+      <div class="flex-col gap-10">
+        <div class="contents">{{ name || '' }}</div>
+        <div class="contents">{{ follower.toLocaleString() }} followers</div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,5 +34,9 @@ img {
 
 .flex-row {
   align-self: flex-start;
+}
+
+.gap-10 {
+  gap: 10px;
 }
 </style>

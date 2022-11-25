@@ -37,6 +37,7 @@ async function getArtistDetails(album) {
     artists.value.push({
       name: response.name,
       image: response.images[0].url,
+      follower: response.followers.total,
     });
   }
 }
@@ -105,6 +106,7 @@ const totalSong = computed(() => {
             <ArtistInfo
               :img="artistInfo.image"
               :name="artistInfo.name"
+              :follower="artistInfo.follower"
             ></ArtistInfo>
           </template>
         </div>
