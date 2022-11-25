@@ -169,29 +169,32 @@ function goToAlbum(id) {
       </div>
     </div>
     <template v-for="(playlist, index) in playlistsRef.items" :key="playlist">
-      <div class="table-row">
+      <div class="table-row" v-if="playlist.track">
         <div class="table-row-item width-id">
           {{ index + 1 }}
         </div>
         <div class="table-row-item width-song">
           <div class="flex-row gap">
-            <img :src="playlist.track.album.images[1].url" alt="album-image" />
+            <img
+              :src="playlist.track?.album.images[1].url || ''"
+              alt="album-image"
+            />
             <div class="flex-col">
-              <p>{{ playlist.track.name }}</p>
-              <p class="name">{{ playlist.track.artists[0].name }}</p>
+              <p>{{ playlist.track?.name }}</p>
+              <p class="name">{{ playlist.track?.artists[0].name }}</p>
             </div>
           </div>
         </div>
         <div class="table-row-item width-album">
-          <div class="album-name" @click="goToAlbum(playlist.track.album.id)">
-            {{ playlist.track.album.name }}
+          <div class="album-name" @click="goToAlbum(playlist.track?.album.id)">
+            {{ playlist.track?.album.name }}
           </div>
         </div>
         <div class="table-row-item width-date">
           {{ formatDate(playlist.added_at) }}
         </div>
         <div class="table-row-item">
-          {{ calculateDurationTime(playlist.track.duration_ms) }}
+          {{ calculateDurationTime(playlist.track?.duration_ms) }}
         </div>
       </div>
     </template>
