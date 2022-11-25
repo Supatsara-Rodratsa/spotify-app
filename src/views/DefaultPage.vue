@@ -35,16 +35,14 @@ function goNext(name) {
 </script>
 <template>
   <div class="flex-col">
-    <Suspense>
-      <div class="flex-col">
-        <div class="flex-row space-between">
-          <h1 class="flex topic">New Album Releases</h1>
-          <div class="underline" @click="goNext('newRelease')">
-            <p>See All</p>
-          </div>
-        </div>
-        <NewReleaseAlbum @selectedAlbum="getAlbum($event)" />
+    <div class="flex-row space-between">
+      <h1 class="flex topic">New Album Releases</h1>
+      <div class="underline" @click="goNext('newRelease')">
+        <p>See All</p>
       </div>
+    </div>
+    <Suspense>
+      <NewReleaseAlbum @selectedAlbum="getAlbum($event)" />
       <template #fallback>
         <div class="flex-row gap mrt-20" v-if="!error">
           <div v-for="item in 4" v-bind:key="item">
@@ -54,16 +52,14 @@ function goNext(name) {
         <ErrorMessage :error="error" v-else />
       </template>
     </Suspense>
-    <Suspense>
-      <div class="flex-col">
-        <div class="flex-row space-between">
-          <h1 class="flex topic">Featured Playlists</h1>
-          <div class="underline" @click="goNext('featuredPlaylists')">
-            <p>See All</p>
-          </div>
-        </div>
-        <FeaturedPlaylist @selectedPlaylist="getSelectedPlaylist($event)" />
+    <div class="flex-row space-between">
+      <h1 class="flex topic">Featured Playlists</h1>
+      <div class="underline" @click="goNext('featuredPlaylists')">
+        <p>See All</p>
       </div>
+    </div>
+    <Suspense>
+      <FeaturedPlaylist @selectedPlaylist="getSelectedPlaylist($event)" />
       <template #fallback>
         <div class="flex-row gap mrt-20" v-if="!error">
           <div v-for="item in 4" v-bind:key="item">

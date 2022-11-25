@@ -8,4 +8,9 @@ export const CONSTANTS = Object.freeze({
     ALBUM: 'album',
     DATE_ADDED: 'added_at',
   },
+  CATEGORY: {
+    ALL: 'All',
+    ALBUM: 'Album',
+    PLAYLIST: 'Playlist',
+  },
 });

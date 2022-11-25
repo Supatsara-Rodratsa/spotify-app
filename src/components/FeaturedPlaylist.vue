@@ -15,7 +15,7 @@ if (getAllFeaturedPlaylist.value.length == 0) {
   await new Promise((resolve) => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 1500);
   });
 }
 

@@ -8,12 +8,14 @@ import {
 import AlbumCard from '../components/AlbumCard.vue';
 import router from '../router/index';
 import ToggleList from '../components/ToggleList.vue';
+import { CONSTANTS } from '../constants/constants';
 
+const CATEGORY = CONSTANTS.CATEGORY;
 const props = defineProps({ search: String });
 const searchResult = ref(null);
 const searchProps = ref('');
-const toggleList = ['All', 'Album', 'Playlist'];
-const selectedToggle = ref('All');
+const toggleList = [CATEGORY.ALL, CATEGORY.ALBUM, CATEGORY.PLAYLIST];
+const selectedToggle = ref(CATEGORY.ALL);
 
 onMounted(async () => {
   searchProps.value = props.search;
