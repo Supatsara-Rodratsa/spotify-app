@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { CONSTANTS } from '../constants/constants';
 
 let token = null;
@@ -109,8 +110,8 @@ export async function getFeaturedPlaylist() {
 export async function checkingToken() {
   if (!token) {
     await getToken(
-      CONSTANTS.SPOTIFY_CLIENT_ID,
-      CONSTANTS.SPOTIFY_CLIENT_SECRET
+      process.env.SPOTIFY_CLIENT_ID,
+      process.env.SPOTIFY_CLIENT_SECRET
     );
   }
 }

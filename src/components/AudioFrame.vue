@@ -45,14 +45,6 @@ const transformEmbed = computed(() => {
   width: 100%;
   height: 80px;
   position: absolute;
-  border: 0;
-}
-
-::ng-deep .as {
-  background: red !important;
-}
-
-.am {
-  background: beige !important;
+  border: 0 !important;
 }
 </style>
