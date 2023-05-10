@@ -1,8 +1,5 @@
 import { CONSTANTS } from '../constants/constants';
-import dotenv from 'dotenv';
 
-// Load environment variables from .env file
-dotenv.config();
 let token = null;
 
 export async function getToken(clientId, clientSecret) {
