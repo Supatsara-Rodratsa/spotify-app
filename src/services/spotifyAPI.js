@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { CONSTANTS } from '../constants/constants';
 import dotenv from 'dotenv';
 
@@ -113,8 +112,8 @@ export async function getFeaturedPlaylist() {
 export async function checkingToken() {
   if (!token) {
     await getToken(
-      process.env.SPOTIFY_CLIENT_ID,
-      process.env.SPOTIFY_CLIENT_SECRET
+      import.meta.env.SPOTIFY_CLIENT_ID,
+      import.meta.env.SPOTIFY_CLIENT_SECRET
     );
   }
 }
